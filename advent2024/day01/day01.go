@@ -2,6 +2,7 @@ package day01
 
 import (
 	"fmt"
+	"os"
 	"sort"
 
 	"github.com/owendavies93/advent-go/util"
@@ -10,11 +11,7 @@ import (
 type Day struct{}
 
 func (d *Day) Part1() {
-	nums, err := util.ReadTwoIntColumns("inputs/2024/01")
-	if err != nil {
-		fmt.Println("Error reading input:", err)
-		return
-	}
+	nums := ParseInput()
 
 	sort.Ints(nums[0])
 	sort.Ints(nums[1])
@@ -32,11 +29,7 @@ func (d *Day) Part1() {
 }
 
 func (d *Day) Part2() {
-	nums, err := util.ReadTwoIntColumns("inputs/2024/01")
-	if err != nil {
-		fmt.Println("Error reading input:", err)
-		return
-	}
+	nums := ParseInput()
 
 	freq := make(map[int]int)
 	for _, n := range nums[1] {
@@ -51,4 +44,13 @@ func (d *Day) Part2() {
 	}
 
 	fmt.Println(score)
+}
+
+func ParseInput() [][]int {
+	nums, err := util.ReadTwoIntColumns("inputs/2024/01")
+	if err != nil {
+		fmt.Println("Error reading input:", err)
+		os.Exit(1)
+	}
+	return nums
 }
