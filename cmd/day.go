@@ -2,6 +2,7 @@ package cmd
 
 import (
 	advent202401 "github.com/owendavies93/advent-go/advent2024/day01"
+	advent202402 "github.com/owendavies93/advent-go/advent2024/day02"
 )
 
 type Day interface {
@@ -15,6 +16,8 @@ func DayFor(year int, day int) Day {
 		switch day {
 		case 1:
 			return &advent202401.Day{}
+		case 2:
+			return &advent202402.Day{}
 		}
 	}
 

@@ -30,6 +30,35 @@ func ReadInts(path string) ([]int, error) {
 	return nums, nil
 }
 
+func ReadIntsFromLines(path string) ([][]int, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+
+	var lines [][]int
+	for scanner.Scan() {
+		line := scanner.Text()
+		nums := strings.Fields(line)
+		if len(nums) == 0 {
+			return nil, fmt.Errorf("empty line")
+		}
+		numsInt := make([]int, len(nums))
+		for i, n := range nums {
+			numsInt[i], err = strconv.Atoi(n)
+			if err != nil {
+				return nil, err
+			}
+		}
+		lines = append(lines, numsInt)
+	}
+
+	return lines, nil
+}
+
 func ReadTwoIntColumns(path string) ([][]int, error) {
 	f, err := os.Open(path)
 	if err != nil {
