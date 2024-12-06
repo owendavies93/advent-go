@@ -6,6 +6,7 @@ import (
 	advent202403 "github.com/owendavies93/advent-go/advent2024/day03"
 	advent202404 "github.com/owendavies93/advent-go/advent2024/day04"
 	advent202405 "github.com/owendavies93/advent-go/advent2024/day05"
+	advent202406 "github.com/owendavies93/advent-go/advent2024/day06"
 )
 
 type Day interface {
@@ -27,6 +28,8 @@ func DayFor(year int, day int) Day {
 			return &advent202404.Day{}
 		case 5:
 			return &advent202405.Day{}
+		case 6:
+			return &advent202406.Day{}
 		}
 	}
 
