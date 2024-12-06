@@ -59,6 +59,22 @@ func ReadIntsFromLines(path string) ([][]int, error) {
 	return lines, nil
 }
 
+func ReadStrings(path string) ([]string, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	var strings []string
+	for scanner.Scan() {
+		strings = append(strings, scanner.Text())
+	}
+
+	return strings, nil
+}
+
 func ReadTwoIntColumns(path string) ([][]int, error) {
 	f, err := os.Open(path)
 	if err != nil {
