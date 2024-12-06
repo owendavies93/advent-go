@@ -14,3 +14,16 @@ func PrintGrid(grid [][]rune) {
 		fmt.Println()
 	}
 }
+
+func D8() [][]int {
+	return [][]int{
+		{-1, -1},
+		{-1, 0},
+		{-1, 1},
+		{0, -1},
+		{0, 1},
+		{1, -1},
+		{1, 0},
+		{1, 1},
+	}
+}
