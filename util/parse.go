@@ -75,6 +75,23 @@ func ReadStrings(path string) ([]string, error) {
 	return strings, nil
 }
 
+func ReadStringsToGrid(path string) ([][]rune, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	var grid [][]rune
+	for scanner.Scan() {
+		line := scanner.Text()
+		grid = append(grid, []rune(line))
+	}
+
+	return grid, nil
+}
+
 func ReadTwoIntColumns(path string) ([][]int, error) {
 	f, err := os.Open(path)
 	if err != nil {
