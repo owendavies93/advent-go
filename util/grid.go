@@ -2,17 +2,35 @@ package util
 
 import "fmt"
 
-func PrintGrid(grid [][]rune) {
-	if len(grid) == 0 {
+type Grid struct {
+	Grid   [][]rune
+	Height int
+	Width  int
+}
+
+func (g Grid) Get(p Point) rune {
+	return g.Grid[p.Y][p.X]
+}
+
+func (g Grid) IsInBounds(p Point) bool {
+	return p.Y >= 0 && p.Y < g.Height && p.X >= 0 && p.X < g.Width
+}
+
+func (g Grid) Print() {
+	if len(g.Grid) == 0 {
 		return
 	}
 
-	for _, row := range grid {
+	for _, row := range g.Grid {
 		for _, cell := range row {
 			fmt.Print(string(cell))
 		}
 		fmt.Println()
 	}
+}
+
+func (g Grid) Set(p Point, r rune) {
+	g.Grid[p.Y][p.X] = r
 }
 
 func D8() [][]int {
