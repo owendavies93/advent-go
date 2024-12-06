@@ -47,11 +47,11 @@ func (d *Day) Part2() {
 	total := 0
 	for y := 0; y < grid.Height; y++ {
 		for x := 0; x < grid.Width; x++ {
-			if grid.Get(util.Point{x, y}) == '#' {
+			if grid.Get(util.Point{X: x, Y: y}) == '#' {
 				continue
 			}
 
-			grid.Set(util.Point{x, y}, '#')
+			grid.Set(util.Point{X: x, Y: y}, '#')
 
 			seen := map[util.PointWithDirection]bool{}
 			seen[start] = true
@@ -75,7 +75,7 @@ func (d *Day) Part2() {
 					break
 				}
 			}
-			grid.Set(util.Point{x, y}, '.')
+			grid.Set(util.Point{X: x, Y: y}, '.')
 		}
 	}
 
@@ -102,5 +102,5 @@ func parseInput() (util.Grid, util.PointWithDirection, error) {
 			}
 		}
 	}
-	return util.Grid{grid, height, width}, util.PointWithDirection{util.Point{startx, starty}, util.UP}, nil
+	return util.Grid{Grid: grid, Height: height, Width: width}, util.PointWithDirection{Point: util.Point{X: startx, Y: starty}, Dir: util.UP}, nil
 }
