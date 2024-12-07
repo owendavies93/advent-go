@@ -28,14 +28,14 @@ func GetOptions() *Options {
 		os.Exit(1)
 	}
 
-	if len(os.Args[2]) <= 2 {
+	if len(os.Args) >= 3 && len(os.Args[2]) <= 2 {
 		day, err := strconv.Atoi(os.Args[2])
 		if err != nil {
 			fmt.Println("Invalid day")
 			os.Exit(1)
 		}
 		opts.Day = day
-	} else {
+	} else if len(os.Args) >= 3 {
 		fmt.Println("Invalid day")
 		os.Exit(1)
 	}
