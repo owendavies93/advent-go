@@ -10,7 +10,9 @@ import (
 	"github.com/owendavies93/advent-go/util"
 )
 
-type Day struct{}
+type Day struct {
+	lines []string
+}
 
 var re = regexp.MustCompile(`mul\((\d+),(\d+)\)`)
 
@@ -33,29 +35,19 @@ func calculateMultiplications(input string) int {
 	return sum
 }
 
-func (d *Day) Part1() {
-	lines, err := ParseInput()
-	if err != nil {
-		fmt.Println("Error parsing input:", err)
-		os.Exit(1)
-	}
-
+func (d *Day) Part1() any {
 	sum := 0
-	for _, line := range lines {
+
+	for _, line := range d.lines {
 		sum += calculateMultiplications(line)
 	}
 
-	fmt.Println(sum)
+	return sum
 }
 
-func (d *Day) Part2() {
-	lines, err := ParseInput()
-	if err != nil {
-		fmt.Println("Error parsing input:", err)
-		os.Exit(1)
-	}
+func (d *Day) Part2() any {
+	all := strings.Join(d.lines, "")
 
-	all := strings.Join(lines, "")
 	sum := 0
 	split := strings.Split(all, "do()")
 	for _, i := range split {
@@ -64,9 +56,14 @@ func (d *Day) Part2() {
 		sum += calculateMultiplications(do)
 	}
 
-	fmt.Println(sum)
+	return sum
 }
 
-func ParseInput() ([]string, error) {
-	return util.ReadStrings("inputs/2024/03")
+func (d *Day) ParseInput() {
+	lines, err := util.ReadStrings("inputs/2024/03")
+	if err != nil {
+		fmt.Println("Error parsing input:", err)
+		os.Exit(1)
+	}
+	d.lines = lines
 }

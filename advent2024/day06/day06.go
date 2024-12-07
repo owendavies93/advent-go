@@ -7,26 +7,24 @@ import (
 	"github.com/owendavies93/advent-go/util"
 )
 
-type Day struct{}
+type Day struct {
+	grid  util.Grid
+	start util.PointWithDirection
+}
 
-func (d *Day) Part1() {
-	grid, start, err := parseInput()
-	if err != nil {
-		fmt.Println("Error parsing input:", err)
-		os.Exit(1)
-	}
-
+func (d *Day) Part1() any {
 	seen := map[util.Point]bool{}
-	seen[start.Point] = true
+	temp := d.start
+	seen[temp.Point] = true
 
 	for {
-		next := start.MoveInDirection()
+		next := temp.MoveInDirection()
 
-		if grid.IsInBounds(next.Point) {
-			if grid.Get(next.Point) == '#' {
-				start = start.RotateRight()
+		if d.grid.IsInBounds(next.Point) {
+			if d.grid.Get(next.Point) == '#' {
+				temp = temp.RotateRight()
 			} else {
-				start = next
+				temp = next
 				seen[next.Point] = true
 			}
 		} else {
@@ -34,33 +32,27 @@ func (d *Day) Part1() {
 		}
 	}
 
-	fmt.Println(len(seen))
+	return len(seen)
 }
 
-func (d *Day) Part2() {
-	grid, start, err := parseInput()
-	if err != nil {
-		fmt.Println("Error parsing input:", err)
-		os.Exit(1)
-	}
-
+func (d *Day) Part2() any {
 	total := 0
-	for y := 0; y < grid.Height; y++ {
-		for x := 0; x < grid.Width; x++ {
-			if grid.Get(util.Point{X: x, Y: y}) == '#' {
+	for y := 0; y < d.grid.Height; y++ {
+		for x := 0; x < d.grid.Width; x++ {
+			if d.grid.Get(util.Point{X: x, Y: y}) == '#' {
 				continue
 			}
 
-			grid.Set(util.Point{X: x, Y: y}, '#')
+			d.grid.Set(util.Point{X: x, Y: y}, '#')
 
 			seen := map[util.PointWithDirection]bool{}
-			seen[start] = true
-			pos := start
+			seen[d.start] = true
+			pos := d.start
 
 			for {
 				next := pos.MoveInDirection()
-				if grid.IsInBounds(next.Point) {
-					if grid.Get(next.Point) == '#' {
+				if d.grid.IsInBounds(next.Point) {
+					if d.grid.Get(next.Point) == '#' {
 						pos = pos.RotateRight()
 					} else {
 						pos = next
@@ -75,17 +67,18 @@ func (d *Day) Part2() {
 					break
 				}
 			}
-			grid.Set(util.Point{X: x, Y: y}, '.')
+			d.grid.Set(util.Point{X: x, Y: y}, '.')
 		}
 	}
 
-	fmt.Println(total)
+	return total
 }
 
-func parseInput() (util.Grid, util.PointWithDirection, error) {
+func (d *Day) ParseInput() {
 	grid, err := util.ReadStringsToGrid("inputs/2024/06")
 	if err != nil {
-		return util.Grid{}, util.PointWithDirection{}, err
+		fmt.Println("Error parsing input:", err)
+		os.Exit(1)
 	}
 
 	startx, starty := 0, 0
@@ -102,5 +95,6 @@ func parseInput() (util.Grid, util.PointWithDirection, error) {
 			}
 		}
 	}
-	return util.Grid{Grid: grid, Height: height, Width: width}, util.PointWithDirection{Point: util.Point{X: startx, Y: starty}, Dir: util.UP}, nil
+	d.grid = util.Grid{Grid: grid, Height: height, Width: width}
+	d.start = util.PointWithDirection{Point: util.Point{X: startx, Y: starty}, Dir: util.UP}
 }

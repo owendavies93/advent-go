@@ -8,49 +8,47 @@ import (
 	"github.com/owendavies93/advent-go/util"
 )
 
-type Day struct{}
+type Day struct {
+	nums [][]int
+}
 
-func (d *Day) Part1() {
-	nums := ParseInput()
-
-	sort.Ints(nums[0])
-	sort.Ints(nums[1])
+func (d *Day) Part1() any {
+	sort.Ints(d.nums[0])
+	sort.Ints(d.nums[1])
 
 	score := 0
-	for i, n := range nums[0] {
-		if n > nums[1][i] {
-			score += n - nums[1][i]
+	for i, n := range d.nums[0] {
+		if n > d.nums[1][i] {
+			score += n - d.nums[1][i]
 		} else {
-			score += nums[1][i] - n
+			score += d.nums[1][i] - n
 		}
 	}
 
-	fmt.Println(score)
+	return score
 }
 
-func (d *Day) Part2() {
-	nums := ParseInput()
-
+func (d *Day) Part2() any {
 	freq := make(map[int]int)
-	for _, n := range nums[1] {
+	for _, n := range d.nums[1] {
 		freq[n]++
 	}
 
 	score := 0
-	for _, n := range nums[0] {
+	for _, n := range d.nums[0] {
 		if val, ok := freq[n]; ok {
 			score += n * val
 		}
 	}
 
-	fmt.Println(score)
+	return score
 }
 
-func ParseInput() [][]int {
+func (d *Day) ParseInput() {
 	nums, err := util.ReadTwoIntColumns("inputs/2024/01")
 	if err != nil {
 		fmt.Println("Error reading input:", err)
 		os.Exit(1)
 	}
-	return nums
+	d.nums = nums
 }

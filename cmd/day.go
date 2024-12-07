@@ -11,8 +11,9 @@ import (
 )
 
 type Day interface {
-	Part1()
-	Part2()
+	Part1() any
+	Part2() any
+	ParseInput()
 }
 
 func DayFor(year int, day int) Day {

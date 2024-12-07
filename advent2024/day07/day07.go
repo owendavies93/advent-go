@@ -9,28 +9,24 @@ import (
 	"github.com/owendavies93/advent-go/util"
 )
 
-type Day struct{}
+type Day struct {
+	eqs []Equation
+}
 
 type Equation struct {
 	Target int
 	Ops    []int
 }
 
-func (d *Day) Part1() {
-	eqs, err := parseInput()
-	if err != nil {
-		fmt.Println("Error parsing input:", err)
-		os.Exit(1)
-	}
-
+func (d *Day) Part1() any {
 	total := 0
-	for _, eq := range eqs {
+	for _, eq := range d.eqs {
 		if eval(0, eq.Ops, 0, eq.Target) {
 			total += eq.Target
 		}
 	}
 
-	fmt.Println(total)
+	return total
 }
 
 func eval(i int, ops []int, val int, target int) bool {
@@ -67,27 +63,22 @@ func evalWithConcat(i int, ops []int, val int, target int) bool {
 	return evalWithConcat(i+1, ops, b, target)
 }
 
-func (d *Day) Part2() {
-	eqs, err := parseInput()
-	if err != nil {
-		fmt.Println("Error parsing input:", err)
-		os.Exit(1)
-	}
-
+func (d *Day) Part2() any {
 	total := 0
-	for _, eq := range eqs {
+	for _, eq := range d.eqs {
 		if evalWithConcat(0, eq.Ops, 0, eq.Target) {
 			total += eq.Target
 		}
 	}
 
-	fmt.Println(total)
+	return total
 }
 
-func parseInput() ([]Equation, error) {
+func (d *Day) ParseInput() {
 	lines, err := util.ReadStrings("inputs/2024/07")
 	if err != nil {
-		return nil, err
+		fmt.Println("Error parsing input:", err)
+		os.Exit(1)
 	}
 
 	res := []Equation{}
@@ -95,7 +86,8 @@ func parseInput() ([]Equation, error) {
 		t := strings.Split(line, ": ")[0]
 		target, err := strconv.Atoi(t)
 		if err != nil {
-			return nil, err
+			fmt.Println("Error parsing input:", err)
+			os.Exit(1)
 		}
 
 		rest := strings.Split(line, ": ")[1]
@@ -105,12 +97,13 @@ func parseInput() ([]Equation, error) {
 		for i, n := range nums {
 			numsInt[i], err = strconv.Atoi(n)
 			if err != nil {
-				return nil, err
+				fmt.Println("Error parsing input:", err)
+				os.Exit(1)
 			}
 		}
 
 		res = append(res, Equation{Target: target, Ops: numsInt})
 	}
 
-	return res, nil
+	d.eqs = res
 }

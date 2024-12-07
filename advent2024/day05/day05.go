@@ -9,7 +9,10 @@ import (
 	"strings"
 )
 
-type Day struct{}
+type Day struct {
+	rules   map[int][]int
+	updates [][]int
+}
 
 func isValidUpdate(rules map[int][]int, update []int) bool {
 	for i := range update {
@@ -24,35 +27,23 @@ func isValidUpdate(rules map[int][]int, update []int) bool {
 	return true
 }
 
-func (d *Day) Part1() {
-	rules, updates, err := parseInput()
-	if err != nil {
-		fmt.Println("Error parsing input:", err)
-		os.Exit(1)
-	}
-
+func (d *Day) Part1() any {
 	total := 0
-	for _, update := range updates {
-		if isValidUpdate(rules, update) {
+	for _, update := range d.updates {
+		if isValidUpdate(d.rules, update) {
 			total += update[len(update)/2]
 		}
 	}
 
-	fmt.Println(total)
+	return total
 }
 
-func (d *Day) Part2() {
-	rules, updates, err := parseInput()
-	if err != nil {
-		fmt.Println("Error parsing input:", err)
-		os.Exit(1)
-	}
-
+func (d *Day) Part2() any {
 	total := 0
-	for _, update := range updates {
-		if !isValidUpdate(rules, update) {
+	for _, update := range d.updates {
+		if !isValidUpdate(d.rules, update) {
 			sort.Slice(update, func(i, j int) bool {
-				for _, from := range rules[update[i]] {
+				for _, from := range d.rules[update[i]] {
 					if update[j] == from {
 						return false
 					}
@@ -63,13 +54,14 @@ func (d *Day) Part2() {
 		}
 	}
 
-	fmt.Println(total)
+	return total
 }
 
-func parseInput() (map[int][]int, [][]int, error) {
+func (d *Day) ParseInput() {
 	f, err := os.Open("inputs/2024/05")
 	if err != nil {
-		return nil, nil, err
+		fmt.Println("Error opening input:", err)
+		os.Exit(1)
 	}
 	defer f.Close()
 
@@ -85,12 +77,14 @@ func parseInput() (map[int][]int, [][]int, error) {
 		split := strings.Split(line, "|")
 		to, err := strconv.Atoi(split[0])
 		if err != nil {
-			return nil, nil, err
+			fmt.Println("Error parsing input:", err)
+			os.Exit(1)
 		}
 
 		from, err := strconv.Atoi(split[1])
 		if err != nil {
-			return nil, nil, err
+			fmt.Println("Error parsing input:", err)
+			os.Exit(1)
 		}
 
 		rules[to] = append(rules[to], from)
@@ -104,12 +98,14 @@ func parseInput() (map[int][]int, [][]int, error) {
 		for _, s := range split {
 			n, err := strconv.Atoi(s)
 			if err != nil {
-				return nil, nil, err
+				fmt.Println("Error parsing input:", err)
+				os.Exit(1)
 			}
 			update = append(update, n)
 		}
 		updates = append(updates, update)
 	}
 
-	return rules, updates, nil
+	d.rules = rules
+	d.updates = updates
 }

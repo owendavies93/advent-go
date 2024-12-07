@@ -7,17 +7,13 @@ import (
 	"github.com/owendavies93/advent-go/util"
 )
 
-type Day struct{}
+type Day struct {
+	grid [][]rune
+}
 
-func (d *Day) Part1() {
-	grid, err := d.ParseInput()
-	if err != nil {
-		fmt.Println("Error parsing input:", err)
-		os.Exit(1)
-	}
-
+func (d *Day) Part1() any {
 	sum := 0
-	for y, row := range grid {
+	for y, row := range d.grid {
 		for x := range row {
 			for _, dir := range util.D8() {
 				dy := dir[0]
@@ -26,10 +22,10 @@ func (d *Day) Part1() {
 				for i := 0; i < 4; i++ {
 					ny := y + dy*i
 					nx := x + dx*i
-					if ny < 0 || ny >= len(grid) || nx < 0 || nx >= len(row) {
+					if ny < 0 || ny >= len(d.grid) || nx < 0 || nx >= len(row) {
 						break
 					}
-					str += string(grid[ny][nx])
+					str += string(d.grid[ny][nx])
 				}
 				if str == "XMAS" {
 					sum++
@@ -38,24 +34,18 @@ func (d *Day) Part1() {
 		}
 	}
 
-	fmt.Println(sum)
+	return sum
 }
 
-func (d *Day) Part2() {
-	grid, err := d.ParseInput()
-	if err != nil {
-		fmt.Println("Error parsing input:", err)
-		os.Exit(1)
-	}
-
+func (d *Day) Part2() any {
 	sum := 0
-	for y := 1; y < len(grid)-1; y++ {
-		for x := 1; x < len(grid[y])-1; x++ {
-			if grid[y][x] == 'A' {
-				tl := grid[y-1][x-1]
-				tr := grid[y-1][x+1]
-				bl := grid[y+1][x-1]
-				br := grid[y+1][x+1]
+	for y := 1; y < len(d.grid)-1; y++ {
+		for x := 1; x < len(d.grid[y])-1; x++ {
+			if d.grid[y][x] == 'A' {
+				tl := d.grid[y-1][x-1]
+				tr := d.grid[y-1][x+1]
+				bl := d.grid[y+1][x-1]
+				br := d.grid[y+1][x+1]
 
 				if tl == 'M' && tr == 'M' && bl == 'S' && br == 'S' {
 					sum++
@@ -72,9 +62,15 @@ func (d *Day) Part2() {
 			}
 		}
 	}
-	fmt.Println(sum)
+
+	return sum
 }
 
-func (d *Day) ParseInput() ([][]rune, error) {
-	return util.ReadStringsToGrid("inputs/2024/04")
+func (d *Day) ParseInput() {
+	grid, err := util.ReadStringsToGrid("inputs/2024/04")
+	if err != nil {
+		fmt.Println("Error parsing input:", err)
+		os.Exit(1)
+	}
+	d.grid = grid
 }

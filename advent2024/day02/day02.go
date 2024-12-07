@@ -8,27 +8,25 @@ import (
 	"github.com/owendavies93/advent-go/util"
 )
 
-type Day struct{}
+type Day struct {
+	nums [][]int
+}
 
-func (d *Day) Part1() {
-	nums := ParseInput()
-
+func (d *Day) Part1() any {
 	count := 0
-	for _, line := range nums {
+	for _, line := range d.nums {
 		if IsValidLine(line) {
 			count++
 		}
 	}
 
-	fmt.Println(count)
+	return count
 }
 
-func (d *Day) Part2() {
-	nums := ParseInput()
-
+func (d *Day) Part2() any {
 	count := 0
 Outer:
-	for _, line := range nums {
+	for _, line := range d.nums {
 		if IsValidLine(line) {
 			count++
 			continue
@@ -52,16 +50,16 @@ Outer:
 		}
 	}
 
-	fmt.Println(count)
+	return count
 }
 
-func ParseInput() [][]int {
+func (d *Day) ParseInput() {
 	nums, err := util.ReadIntsFromLines("inputs/2024/02")
 	if err != nil {
 		fmt.Println("Error reading input:", err)
 		os.Exit(1)
 	}
-	return nums
+	d.nums = nums
 }
 
 func IsValidLine(line []int) bool {
