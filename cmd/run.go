@@ -8,6 +8,7 @@ func (opts *Options) Run() {
 	if opts.Day == 0 {
 		fmt.Println("Running all days")
 		for day := 1; day <= 7; day++ {
+			fmt.Println("Day", day)
 			day := DayFor(opts.Year, day)
 			day.ParseInput()
 
@@ -16,6 +17,8 @@ func (opts *Options) Run() {
 
 			fmt.Println("Part 2")
 			fmt.Println(day.Part2())
+
+			fmt.Println("---")
 		}
 	} else {
 		fmt.Printf("Running %d day %d\n", opts.Year, opts.Day)
