@@ -7,10 +7,11 @@ import (
 )
 
 type Options struct {
-	Year  int
-	Day   int
-	Part1 bool
-	Part2 bool
+	Year    int
+	Day     int
+	Part1   bool
+	Part2   bool
+	Example bool
 }
 
 func GetOptions() *Options {
@@ -50,6 +51,12 @@ func GetOptions() *Options {
 			fmt.Println("Invalid part")
 			os.Exit(1)
 		}
+	}
+
+	if len(os.Args) >= 5 {
+		opts.Example = true
+	} else {
+		opts.Example = false
 	}
 
 	return &opts

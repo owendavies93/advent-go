@@ -32,12 +32,21 @@ func (opts *Options) Run() {
 		fmt.Printf("Running %d day %d\n", opts.Year, opts.Day)
 
 		day := DayFor(opts.Year, opts.Day)
-		input, err := util.GetInput(opts.Year, opts.Day)
-		if err != nil {
-			fmt.Println("Error getting input:", err)
-			os.Exit(1)
+		if !opts.Example {
+			input, err := util.GetInput(opts.Year, opts.Day)
+			if err != nil {
+				fmt.Println("Error getting input:", err)
+				os.Exit(1)
+			}
+			day.ParseInput(input)
+		} else {
+			example_input, err := util.GetExampleInput(opts.Year, opts.Day)
+			if err != nil {
+				fmt.Println("Error getting example input:", err)
+				os.Exit(1)
+			}
+			day.ParseInput(example_input)
 		}
-		day.ParseInput(input)
 
 		if opts.Part1 {
 			fmt.Println("Part 1")
