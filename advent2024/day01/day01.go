@@ -44,8 +44,8 @@ func (d *Day) Part2() any {
 	return score
 }
 
-func (d *Day) ParseInput() {
-	nums, err := util.ReadTwoIntColumns("inputs/2024/01")
+func (d *Day) ParseInput(input string) {
+	nums, err := util.ReadTwoIntColumns(input)
 	if err != nil {
 		fmt.Println("Error reading input:", err)
 		os.Exit(1)

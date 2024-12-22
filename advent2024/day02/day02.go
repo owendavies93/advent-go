@@ -53,8 +53,8 @@ Outer:
 	return count
 }
 
-func (d *Day) ParseInput() {
-	nums, err := util.ReadIntsFromLines("inputs/2024/02")
+func (d *Day) ParseInput(input string) {
+	nums, err := util.ReadIntsFromLines(input)
 	if err != nil {
 		fmt.Println("Error reading input:", err)
 		os.Exit(1)

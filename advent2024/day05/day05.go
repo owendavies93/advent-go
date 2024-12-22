@@ -57,8 +57,8 @@ func (d *Day) Part2() any {
 	return total
 }
 
-func (d *Day) ParseInput() {
-	f, err := os.Open("inputs/2024/05")
+func (d *Day) ParseInput(input string) {
+	f, err := os.Open(input)
 	if err != nil {
 		fmt.Println("Error opening input:", err)
 		os.Exit(1)

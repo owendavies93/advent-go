@@ -59,8 +59,8 @@ func (d *Day) Part2() any {
 	return sum
 }
 
-func (d *Day) ParseInput() {
-	lines, err := util.ReadStrings("inputs/2024/03")
+func (d *Day) ParseInput(input string) {
+	lines, err := util.ReadStrings(input)
 	if err != nil {
 		fmt.Println("Error parsing input:", err)
 		os.Exit(1)

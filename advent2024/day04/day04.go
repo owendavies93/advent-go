@@ -66,8 +66,8 @@ func (d *Day) Part2() any {
 	return sum
 }
 
-func (d *Day) ParseInput() {
-	grid, err := util.ReadStringsToGrid("inputs/2024/04")
+func (d *Day) ParseInput(input string) {
+	grid, err := util.ReadStringsToGrid(input)
 	if err != nil {
 		fmt.Println("Error parsing input:", err)
 		os.Exit(1)

@@ -77,8 +77,8 @@ func (d *Day) Part2() any {
 	return len(antinodes)
 }
 
-func (d *Day) ParseInput() {
-	grid, err := util.ReadStringsToGrid("inputs/2024/08")
+func (d *Day) ParseInput(input string) {
+	grid, err := util.ReadStringsToGrid(input)
 	if err != nil {
 		fmt.Println("Error parsing input:", err)
 		os.Exit(1)
