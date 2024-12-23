@@ -1,4 +1,4 @@
-package day03
+package advent202403
 
 import (
 	"fmt"

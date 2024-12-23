@@ -1,4 +1,4 @@
-package day01
+package advent202401
 
 import (
 	"testing"
@@ -10,11 +10,11 @@ import (
 func TestPart1(t *testing.T) {
 	d := Day{}
 	d.ParseInput(util.GetExampleInputForDayOrExit(2024, 1))
-	assert.EqualValues(t, d.Part1(), 11)
+	assert.EqualValues(t, 11, d.Part1())
 }
 
 func TestPart2(t *testing.T) {
 	d := Day{}
 	d.ParseInput(util.GetExampleInputForDayOrExit(2024, 1))
-	assert.EqualValues(t, d.Part2(), 31)
+	assert.EqualValues(t, 31, d.Part2())
 }
