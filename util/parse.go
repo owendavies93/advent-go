@@ -59,6 +59,27 @@ func ReadIntsFromLines(path string) ([][]int, error) {
 	return lines, nil
 }
 
+func ReadIntsFromSingleLine(path string, separator string) ([]int, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	scanner.Scan()
+	line := scanner.Text()
+	nums := strings.Split(line, separator)
+	numsInt := make([]int, len(nums))
+	for i, n := range nums {
+		numsInt[i], err = strconv.Atoi(n)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return numsInt, nil
+}
+
 func ReadStrings(path string) ([]string, error) {
 	f, err := os.Open(path)
 	if err != nil {
