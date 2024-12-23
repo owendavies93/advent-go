@@ -4,6 +4,10 @@ type Point struct {
 	X, Y int
 }
 
+func (p Point) Add(p2 Point) Point {
+	return Point{p.X + p2.X, p.Y + p2.Y}
+}
+
 type Direction struct {
 	Dx, Dy int
 }
