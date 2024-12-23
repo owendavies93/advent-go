@@ -36,3 +36,21 @@ func GetExampleInput(year int, day int) (string, error) {
 
 	return "", fmt.Errorf("example input does not exist in any parent directory")
 }
+
+func GetInputForDayOrExit(year int, day int) string {
+	input, err := GetInput(year, day)
+	if err != nil {
+		fmt.Println("Error getting input:", err)
+		os.Exit(1)
+	}
+	return input
+}
+
+func GetExampleInputForDayOrExit(year int, day int) string {
+	input, err := GetExampleInput(year, day)
+	if err != nil {
+		fmt.Println("Error getting example input:", err)
+		os.Exit(1)
+	}
+	return input
+}
