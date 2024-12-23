@@ -20,13 +20,17 @@ func GetInput(year int, day int) (string, error) {
 }
 
 func GetExampleInput(year int, day int) (string, error) {
+	return GetNthExampleInput(year, day, 1)
+}
+
+func GetNthExampleInput(year int, day int, n int) (string, error) {
 	currentDir, err := os.Getwd()
 	if err != nil {
 		return "", fmt.Errorf("error getting current directory: %w", err)
 	}
 
 	for dir := currentDir; dir != "/"; dir = filepath.Dir(dir) {
-		file := filepath.Join(dir, fmt.Sprintf("inputs/%d/%02d-test", year, day))
+		file := filepath.Join(dir, fmt.Sprintf("inputs/%d/%02d-test%d", year, day, n))
 		if _, err := os.Stat(file); err == nil {
 			return file, nil
 		} else if !errors.Is(err, os.ErrNotExist) {
@@ -46,11 +50,15 @@ func GetInputForDayOrExit(year int, day int) string {
 	return input
 }
 
-func GetExampleInputForDayOrExit(year int, day int) string {
-	input, err := GetExampleInput(year, day)
+func GetNthExampleInputForDayOrExit(year int, day int, n int) string {
+	input, err := GetNthExampleInput(year, day, n)
 	if err != nil {
 		fmt.Println("Error getting example input:", err)
 		os.Exit(1)
 	}
 	return input
+}
+
+func GetExampleInputForDayOrExit(year int, day int) string {
+	return GetNthExampleInputForDayOrExit(year, day, 1)
 }
